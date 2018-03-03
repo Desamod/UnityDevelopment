@@ -11,19 +11,17 @@ public class MenuScript : MonoBehaviour
 
 	// Use this for initialization
 	void Start ()
-	{
-		level = 1;
-		//character = 1;
-		//по умолчанию 
+	{   //по умолчанию
+		setLevel (1);
 		setPerson (1);
 	}
 	
 
 	public void OnClickStart () {
 		//SceneManager.LoadScene (level);
-		Debug.Log(level + "level");
-		Debug.Log(GlobalPlayer.playerid);
-		SceneManager.LoadScene (level);
+		Debug.Log(GlobalParameters.id_level + "level");
+		Debug.Log(GlobalParameters.id_player);
+		SceneManager.LoadScene (GlobalParameters.id_level);
 	}
 
 	public void OnClickPersChanger () {
@@ -31,14 +29,16 @@ public class MenuScript : MonoBehaviour
 	}
 
 	public void OnClickBPerson (int pers) {
-		//character = pers;
-		//сверху просто для теста, а вот ниже уже годно
 		setPerson (pers);
 		perschanger.SetActive (false);
 	}
 
 	public void setPerson (int id) {
-		GlobalPlayer.playerid = id;
+		GlobalParameters.id_player = id;
+	}
+
+	public void setLevel (int lvl) {
+		GlobalParameters.id_level = lvl;
 	}
 
 	public void OnClickLvlChanger () {
@@ -47,7 +47,7 @@ public class MenuScript : MonoBehaviour
 	}
 
 	public void OnClickBLevel (int lvl) {
-		level = lvl;
+		GlobalParameters.id_level = lvl;
 		lvlchanger.SetActive (false);
 	}
 

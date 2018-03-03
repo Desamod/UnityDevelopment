@@ -3,46 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-	
-	private bool isGrounded = false;
-	//ссылка на компонент Transform объекта
-	//для определения соприкосновения с землей
-	public Transform groundCheck;
-	//радиус определения соприкосновения с землей
-	private float groundRadius = 0.2f;
-	//ссылка на слой, представляющий землю
-	public LayerMask whatIsGround;
-
-	Rigidbody2D rd;
-	float speed = 6.0f;
-	private float atmosphere = 10.0f;
 
 	// Use this for initialization
+	GameObject player;
 	void Start () {
-		int testplayer = GlobalPlayer.playerid;
-		Debug.Log (testplayer);
-		rd = GetComponent<Rigidbody2D> ();
+		switch (GlobalParameters.id_player)
+		{
+		  case 1: 
+			gameObject.AddComponent<SquarePlayer> ();
+			break; 
+		  case 2: 
+			gameObject.AddComponent<BallPlayer> ();
+			break; 
+		  case 3: 
+			gameObject.AddComponent<TrianglePlayer> ();
+			break; 
+		}
+
+		player = GameObject.FindGameObjectWithTag("Player");
+
+		switch (GlobalParameters.id_level)
+		{
+		case 1: 
+			player.GetComponent<PlayerManager> ().Gravity = 11.8f;
+			break; 
+		case 2: 
+			player.GetComponent<PlayerManager> ().Gravity = 9.8f;
+			break; 
+		case 3: 
+			player.GetComponent<PlayerManager> ().Gravity = 8.0f;
+			break; 
+		}
+
+
+		//gameObject.AddComponent<TrianglePlayer> ();
+
 	}
 
-	// Update is called once per frame
+
 	void Update () {
-		if (isGrounded == true && Input.GetButtonDown ("Jump")) {     // заменить на Input.touches
-			rd.AddForce (new Vector2 (0, 40 * atmosphere));
-			isGrounded = false;
-		}
+
 
 	}
 
 
 
-	void OnCollisionEnter2D(Collision2D coll) {
+	//void OnCollisionEnter2D(Collision2D coll) {
 		
-		if (coll.gameObject.name == "hill") {
+		//if (coll.gameObject.name == "hill") {
 			//Debug.Log (coll.gameObject.name);
-			isGrounded = true;
-			if (Input.GetButtonDown ("Jump")) {     // заменить на Input.touches
+			//isGrounded = true;
+			//if (Input.GetButtonDown ("Jump")) {     // заменить на Input.touches
 				//rd.AddForce (new Vector2 (0, 20 * atmosphere));
-			}
-		}
-	}
+		//	}
+		//} else if (coll.gameObject.name == "kektus(Clone)" || coll.gameObject.name == "stone(Clone)" ) {
+		//	PlayerManager.isAlive = false;
+		//	rd.gameObject.SetActive (false);
+		//	Lose_Panel.SetActive (true);
+		//}
+	//}
 }
