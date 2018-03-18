@@ -7,7 +7,6 @@ public class SquarePlayer : PlayerManager
 	override public void Set_Avatar () 
 	{
 		spr = Resources.Load<Sprite>("Sprites/square");
-		//spr.textureRect.size = new Vector2(10.0f, 5.0f);
 		GetComponent<SpriteRenderer> ().sprite = spr;
 		transform.localScale = new Vector2 (0.5f, 0.5f);
 	}

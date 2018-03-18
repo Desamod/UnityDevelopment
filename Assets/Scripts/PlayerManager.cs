@@ -60,7 +60,25 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 
+	virtual public bool Overlaps() {
+		GameObject[] collarray = GameObject.FindGameObjectsWithTag ("Collision");
+		Vector2 center = new Vector2 (transform.position.x, transform.position.y);
+		Vector2 halfsize = GetComponent<SpriteRenderer> ().sprite.rect.size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+		halfsize.x = halfsize.x * transform.localScale.x / 2.1f;
+		halfsize.y = halfsize.y * transform.localScale.y / 2.2f;
+		foreach (GameObject arr in collarray) {
+			Vector2 collcentr = new Vector2 (arr.transform.position.x, arr.transform.position.y);
+			Vector2 collsize = arr.GetComponent<SpriteRenderer> ().sprite.rect.size / arr.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+		
+			collsize.x = collsize.x * arr.transform.localScale.x / 2.1f;
+			collsize.y = collsize.y * arr.transform.localScale.y / 2.2f;
 
+			if (Mathf.Abs (center.x - collcentr.x) <= halfsize.x + collsize.x && 
+				Mathf.Abs (center.y - collcentr.y) <= halfsize.y + collsize.y)
+				return true;
+		}
+		return false;
+	}
 
 	void Start () {
 		isGrounded = true;
@@ -73,7 +91,8 @@ public class PlayerManager : MonoBehaviour {
 	void Update () {
 		
 		UpdateSpeed ();
-		if (isGrounded == true && Input.GetButtonDown ("Jump")) {
+
+		if (isGrounded == true && (Input.touchCount > 0 || Input.GetButtonDown ("Jump"))) { 
 			FlySpeed = 10.0f;
 			isGrounded = false;
 		} 
@@ -81,7 +100,6 @@ public class PlayerManager : MonoBehaviour {
 			FlySpeed = FlySpeed - gravity * Time.deltaTime;
 			Jump ();
 		}
-
 			
 	}
 

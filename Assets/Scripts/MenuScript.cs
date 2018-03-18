@@ -5,22 +5,23 @@ using UnityEngine.SceneManagement;
 public class MenuScript : MonoBehaviour
 {
 	int level;
-	//int character;
 	public GameObject lvlchanger;
 	public GameObject perschanger;
 
 	// Use this for initialization
 	void Start ()
-	{   //по умолчанию
-		setLevel (1);
-		setPerson (1);
+	{   
+		Screen.autorotateToPortrait = false;
+		Screen.autorotateToPortraitUpsideDown = false;
+		//по умолчанию
+		if (GlobalParameters.id_level == 0) {
+			setLevel (1);
+			setPerson (1);
+		}
 	}
 	
 
 	public void OnClickStart () {
-		//SceneManager.LoadScene (level);
-		Debug.Log(GlobalParameters.id_level + "level");
-		Debug.Log(GlobalParameters.id_player);
 		SceneManager.LoadScene (GlobalParameters.id_level);
 	}
 

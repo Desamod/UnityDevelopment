@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
+	public GameObject EndOfGame;
+	bool end = false;
 	GameObject player;
 	void Start () {
 		switch (GlobalParameters.id_player)
@@ -35,31 +39,22 @@ public class PlayerController : MonoBehaviour {
 			break; 
 		}
 
-
-		//gameObject.AddComponent<TrianglePlayer> ();
-
 	}
 
 
 	void Update () {
-
+		if (player.GetComponent<PlayerManager> ().Overlaps () && end == false) {
+			Transform.Instantiate (EndOfGame);
+			PlayerManager.isAlive = false;
+			gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			end = true;
+		}
+			
+		if (PlayerManager.isAlive == false && Input.touchCount > 0) { 
+			SceneManager.LoadScene (0);
+		}
 
 	}
 
 
-
-	//void OnCollisionEnter2D(Collision2D coll) {
-		
-		//if (coll.gameObject.name == "hill") {
-			//Debug.Log (coll.gameObject.name);
-			//isGrounded = true;
-			//if (Input.GetButtonDown ("Jump")) {     // заменить на Input.touches
-				//rd.AddForce (new Vector2 (0, 20 * atmosphere));
-		//	}
-		//} else if (coll.gameObject.name == "kektus(Clone)" || coll.gameObject.name == "stone(Clone)" ) {
-		//	PlayerManager.isAlive = false;
-		//	rd.gameObject.SetActive (false);
-		//	Lose_Panel.SetActive (true);
-		//}
-	//}
 }

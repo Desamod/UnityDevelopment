@@ -7,13 +7,11 @@ public class TrianglePlayer : PlayerManager
 	override public void Set_Avatar () 
 	{
 		spr = Resources.Load<Sprite>("Sprites/triangle");
-		//spr.textureRect.size = new Vector2(10.0f, 5.0f);
 		GetComponent<SpriteRenderer> ().sprite = spr;
 		transform.localScale = new Vector2 (0.5f, 0.5f);
 	}
 
 	override public void UpdateSpeed () {
-	//speed = speed + 0.00000025f;
 	if (isAlive == false) {
 		speed = 0;
 		}

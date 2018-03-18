@@ -7,7 +7,4 @@ public class GlobalParameters {
 
 	public static int id_player;
 	public static int id_level;
-
-
-
 }
